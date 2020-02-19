@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data Testing</title>
+</head>
+<body>
+    
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+    <script>
+
+    const app = {}
+        
+    // app.retrieveData = function() {
+    //     $.ajax({
+    //         url: `https://www.sandy.codes/testingJson/neighbourhood-profiles-2016-csv.json`,
+    //         method: "GET",
+    //         dataType: "json",
+    //         // data: {
+    //         // key: `${app.apiKey}`,
+    //         // q: `${query}`
+    //         // }
+    //     }).then(function(result) {
+    //         console.log(result);
+    //     });
+    // };
+
+    app.retrieveData = function() {
+        $.ajax({
+            url: 'http://proxy.hackeryou.com',
+            dataType: 'json',
+            method:'GET',
+            data: {
+                reqUrl: 'https://www.sandy.codes/testingJson/neighbourhood-profiles-2016-csv.json',
+                xmlToJSON: false,
+                useCache: false
+            }
+        }).then(function(result) {
+            console.log(result);
+            result.forEach(function(item) {
+                // const category = "Category";
+                // item 2 in array
+                const population = "Population and dwellings";
+                const twentySixteenData = "Population, 2016"
+                const churchYongeCorridor = "Church-Yonge Corridor";
+                const trinityBellwoods = "Trinity-Bellwoods";
+                const householdCharacteristic = "Household characteristic";
+
+                const livingAlone = "Persons living alone (total)";
+                const livingAlonePercentage = "Persons living alone (per cent)";
+                const livingAloneTopic = "Family characteristics of adults"
+
+                const highRise = "Apartment in a building that has five or more storeys";
+                const lowRise = "Apartment in a building that has fewer than five storeys";
+
+                const totalInToronto = "City of Toronto";
+                const trimmedCharacteristic = item.Characteristic.trim();
+
+                const before1960 = "1960 or before";
+
+                if (item.Topic === population && item.Characteristic === twentySixteenData) {
+                    console.log(`The population of ${churchYongeCorridor} is ${item[churchYongeCorridor]}`);
+                    console.log(`The population of ${trinityBellwoods} is ${item[trinityBellwoods]}`);
+                }
+
+                if (item.Characteristic === livingAlone) {
+                    console.log(`The population of people living alone in ${churchYongeCorridor} is ${item[churchYongeCorridor]}`);
+                }
+
+                if (item.Characteristic === livingAlonePercentage) {
+                    console.log(`The percentage of people living alone in ${churchYongeCorridor} is ${item[churchYongeCorridor]}`);
+                }
+
+                if (trimmedCharacteristic === highRise) {
+                    console.log(`The amount of people in the ${churchYongeCorridor} that live in ${highRise} is ${item[churchYongeCorridor]}, out of ${item[totalInToronto]} in all of Toronto.`);
+                }
+
+                if (trimmedCharacteristic === lowRise) {
+                    console.log(`The amount of people in the ${churchYongeCorridor} that live in ${lowRise} is ${item[churchYongeCorridor]}, out of ${item[totalInToronto]} in all of Toronto.`);
+                }
+
+                if (trimmedCharacteristic === before1960) {
+                    console.log(`The amount of households in ${churchYongeCorridor} built before 1960 is ${item[churchYongeCorridor]}`);
+                }
+            });
+        });
+    }
+
+        // app.retrieveData = function() {
+        //     axios({
+        //         method:'GET',
+        //         url: 'http://proxy.hackeryou.com',
+        //         dataResponse:'json',
+        //         params: {
+        //             reqUrl: 'https://www.sandy.codes/testingJson/neighbourhood-profiles-2016-csv.json',
+        //             xmlToJSON: false
+        //         }
+        //     }).then((result) => {
+        //         // console.log(result);
+        //         result.forEach(function(item) {
+        //         // const category = "Category";
+        //         // item 2 in array
+        //         const population = "Population and dwellings";
+        //         const twentySixteenData = "Population, 2016"
+        //         const churchYongeCorridor = "Church-Yonge Corridor";
+        //         const trinityBellwoods = "Trinity-Bellwoods";
+        //         if (item.Topic === population && item.Characteristic === twentySixteenData) {
+        //             console.log(`The population of ${churchYongeCorridor} is ${item[churchYongeCorridor]}`);
+        //             console.log(`The population of ${trinityBellwoods} is ${item[trinityBellwoods]}`);
+        //         }
+        //         });
+        //     });
+        // }
+
+    // app.retrieveData = function() {
+    //     fetch('./neighbourhood-profiles-2016-csv.json')
+    //         .then(function(response) {
+    //             if (response.status !== 200) {
+    //                 console.log('Looks like there was a problem. Status Code: ' + response.status);
+    //             return;
+    //         }
+    //         // Examine the text in the response
+    //         response.json().then(function(data) {
+    //             // console.log(data);
+    //             data.forEach(function(item) {
+    //             // const category = "Category";
+    //             // item 2 in array
+    //             const population = "Population and dwellings";
+    //             const twentySixteenData = "Population, 2016"
+    //             const churchYongeCorridor = "Church-Yonge Corridor";
+    //             const trinityBellwoods = "Trinity-Bellwoods";
+    //             if (item.Topic === population && item.Characteristic === twentySixteenData) {
+    //                 console.log(`The population of ${churchYongeCorridor} is ${item[churchYongeCorridor]}`);
+    //                 console.log(`The population of ${trinityBellwoods} is ${item[trinityBellwoods]}`);
+    //             };
+    //         });
+    //     });
+    //     }).catch(function(err) {
+    //         console.log('Fetch Error :-S', err);
+    //     });
+    // }
+
+    // const get = (url) => {
+    //         const xhr = new XMLHttpRequest();
+    //         // pending
+    //         // instantiate the promise
+    //         const myRequest = new Promise(function(resolve, reject) {
+    //             xhr.open('GET', url);
+    //             xhr.onload = function () {
+    //                 if (xhr.status === 200) {
+    //                     // 200 == resolved
+    //                     const data = JSON.parse(xhr.responseText);
+    //                     resolve(data);
+    //                 }
+    //                 else {
+    //                     // rejected
+    //                     alert('Request failed.  Returned status of ' + xhr.status);
+    //                     reject();
+    //                 }
+    //             };
+    //             xhr.send();
+    //         });
+    //         return myRequest;
+    //     }
+
+    //     // Here's an example of how we make an HTTP request without $.ajax or axios
+    //     get('https://www.sandy.codes/testingJson/neighbourhood-profiles-2016-csv.json').then(
+    //         function(data) {
+    //             console.log(data);
+    //     })
+
+    
+
+
+
+    app.init = function() {
+        app.retrieveData();
+    };
+    
+    app.init();
+
+    </script>
+</body>
+</html>

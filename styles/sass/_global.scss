@@ -1,0 +1,23 @@
+body, main, section, footer, div, p, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    background-color: $neutral;
+    font-size: 62.5%;
+    color: $black;
+}
+
+.wrapper {
+    width: 90vw;
+    margin: 0 auto;
+}

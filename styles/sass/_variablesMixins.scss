@@ -1,0 +1,28 @@
+// Colours 
+
+$neutral: #eee9e3;
+$main: #f2b151;
+$accent: #e2670c;
+
+$black: #262626;
+$white: #ffffff;
+
+// Font Faces
+
+@mixin logo {
+    font-family: clarendon-urw-extra-wide,serif;
+    font-weight: 800;
+    font-style: italic;
+}
+
+@mixin script {
+    font-family: bello-pro, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@mixin caps {
+    font-family: bebas-neue, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>416Local - Toronto Neighbourhood Data</title>
+    <link rel="stylesheet" href="https://use.typekit.net/ucw2dho.css">
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="navContainer">
+                <img src="./assets/nav.svg" alt="Click to open navigation">
+            </div>
+            <div class="logoContainer">
+                <img src="./assets/logo.svg" alt="YYZLocal Logo">
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <form class="searchForANeighbourhood" id="searchForANeighbourhood">
+                <input type="text" name="searchTerm" id="searchTerm" placeholder="Neighbourhood name">
+                <button type="submit">Search for a Neighbourhood</button>
+            </form>
+            <div class="breakLine">
+                <img src="./assets/breakLine.svg" alt="">
+            </div>
+    
+            <select class="neighbourhoodOptions" id="neighbourhoodOptions">
+                <option value="bellwoods">Choose a Neighbourhood</option>
+            </select>
+        </div>
+    </header>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+    <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+main {
+    .searchForANeighbourhood {
+        width: 100%;
+        text-align: center;
+        input, button {
+            @include caps;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 1.7rem;
+        }
+        input {
+            border: 5px solid $main;
+            margin: 10px 0;
+            &::placeholder {
+                text-align: center;
+                color: $black;
+                opacity: 1;
+            }
+        }
+        button {
+            border: 5px solid $black;
+            color: $accent;
+            background-color: $black;
+            margin-bottom: 10px;
+        }
+    }
+    .breakLine {
+        width: 100%;
+        margin: 20px 0;
+        img {
+            width: 100%;
+        }
+    }
+    .neighbourhoodOptions {
+        @include caps;
+        text-align: center;
+        font-size: 1.7rem;
+        border-radius: 10px;
+        border: 5px solid $main;
+        width: 100%;
+        background-color: $main;
+        margin-top: 10px;
+    }
+}
