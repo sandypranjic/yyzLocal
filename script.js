@@ -11,6 +11,24 @@ app.listenForFormSubmit = function() {
     })
 }
 
+app.dataQueries = {
+    // Neighbourhood Data:
+    population: "Population, 2016",
+    totalIncome: "Total income: Average amount ($)",
+    unaffordableHousing: "Rate of unaffordable housing",
+    highriseBuilding: "Apartment in a building that has five or more storeys",
+    privateDwellings: "Occupied private dwellings",
+    condo: "Condominium",
+    // Age Characteristics:
+    children: "Children (0-14 years)",
+    youth: "Youth (15-24 years)",
+    workingAge: "Working Age (25-54 years)",
+    preRetirement: "Pre-retirement (55-64 years)",
+    seniors: "Seniors (65+ years)",
+}
+
+app.searchMatches = [];
+
 app.searchDataSet = function(searchQuery) {
     fetch('./neighbourhood-profiles-2016-csv.json')
         .then(function(response) {
@@ -19,82 +37,151 @@ app.searchDataSet = function(searchQuery) {
             return;
         }
         response.json().then(function(data) {
+            app.searchMatches = [];
             data.forEach(function(item) {
-            const population = "Population, 2016";
-            const totalIncome = "Total income: Average amount ($)";
-            // Unaffordable housing is the percentage of private households spending more than 30 percent of their total household income on shelter costs.
-            const unaffordableHousing = "Rate of unaffordable housing"
-            const highriseBuilding = "Apartment in a building that has five or more storeys";
-            const privateDwellings = "Occupied private dwellings";
-            const condo = "Condominium";
             const cleanedSearchQuery = app.cleanData(searchQuery);
-            // Age Characteristics:
-            const children = "Children (0-14 years)";
-            const youth = "Youth (15-24 years)";
-            const workingAge = "Working Age (25-54 years)";
-            const preRetirement = "Pre-retirement (55-64 years)";
-            const seniors = "Seniors (65+ years)";
             if (item.Characteristic === "Neighbourhood Number") {
                 for (prop in item) {
                     const cleanedPropData = app.cleanData(prop);
                     if (cleanedPropData === "Weston" && cleanedSearchQuery.includes("Pelham Park") === false && cleanedSearchQuery === "Weston") {
                         console.log(`${prop} exists in this list`);
+                        app.searchMatches.push(prop);
                     } else if (cleanedPropData.includes(cleanedSearchQuery) && cleanedSearchQuery !== "Weston" || cleanedPropData === cleanedSearchQuery && cleanedSearchQuery !== "Weston") {
                         console.log(`${prop} exists in this list`);
-                        data.forEach(function(item) {
-                            if (item.Characteristic === population) {
-                                app.displayPopulationData(prop, item[prop]);
-                                const totalPopulation = item[prop];
-                                // Age characteristics:
-                                data.forEach(function(item) {
-                                    if (item.Characteristic === children) {
-                                        app.displayChildrenData(prop, item[prop], totalPopulation);
-                                    }
-                                    if (item.Characteristic === youth) {
-                                        app.displayYouthData(prop, item[prop], totalPopulation);
-                                    }
-                                    if (item.Characteristic === workingAge) {
-                                        app.displayWorkingAgeData(prop, item[prop], totalPopulation);
-                                    }
-                                    if (item.Characteristic === preRetirement) {
-                                        app.displayPreRetirementData(prop, item[prop], totalPopulation);
-                                    }
-                                    if (item.Characteristic === seniors) {
-                                        app.displaySeniorsData(prop, item[prop], totalPopulation);
-                                    }
-                                })
-                            }
-                            // Average Income Data
-                            if (item.Characteristic === totalIncome) {
-                                app.displayIncomeData(prop, item[prop]);
-                            }
-                            // Rate of Unaffordable Housing Data (Rental)
-                            if (item.Characteristic === unaffordableHousing) {
-                                app.displayUnaffordableHousingData(prop, item[prop]);
-                            }
-                            // Data Relating to Dwellings
-                            if (item.Characteristic === privateDwellings) {
-                                const numberOfPrivateDwellings = item[prop];
-                                data.forEach(function(item) {
-                                    // Number of Highrise Buildings
-                                    if (item.Characteristic.trim() === highriseBuilding) {
-                                        app.displayHighriseData(prop, item[prop], numberOfPrivateDwellings);
-                                    }
-                                    // Number of Condos
-                                    if (item.Characteristic.trim() === condo) {
-                                        app.displayCondoData(prop, item[prop], numberOfPrivateDwellings);
-                                    }
-                                })
-                            }
-                        })
+                        app.searchMatches.push(prop);
                     }
                 }
+                app.checkHowManyMatches(data);
             }
         });
     });
     }).catch(function(err) {
         console.log('Fetch Error :-S', err);
     });
+}
+
+app.checkHowManyMatches = function(data) {
+    if (app.searchMatches.length === 0) {
+        console.log(`Sorry, we couldn't find a match for your search.`);
+    } else if (app.searchMatches.length === 1) {
+        console.log(`There is one match`);
+        app.getData(data, app.searchMatches[0]);
+    } else if (app.searchMatches.length > 1) {
+        console.log(`${app.searchMatches} There are multiple matches.`);
+        app.multipleSearchOptions(data);
+    }
+}
+
+app.multipleSearchOptions = function(data) {
+    console.log(`Did you mean...`);
+
+    // Create a div that pops-up
+    const header = document.querySelector("header");
+    const selectAnOption = document.createElement("div");
+    selectAnOption.setAttribute("class", "selectAnOption");
+    selectAnOption.setAttribute("id", "selectAnOption");
+
+    // Create a button to exit the pop-up
+    const exitOptionsContainer = document.createElement("div");
+    exitOptionsContainer.setAttribute("class", "exitOptionsContainer");
+    const exitOptionsButton = document.createElement("button");
+    exitOptionsButton.setAttribute("class", "exitOptionsButton");
+    exitOptionsButton.setAttribute("id", "exitOptionsButton");
+    selectAnOption.appendChild(exitOptionsContainer);
+    exitOptionsContainer.appendChild(exitOptionsButton);
+    exitOptionsButton.innerText = "X";
+
+    // Create a list to hold the search options
+    const searchOptionsList = document.createElement("ul");
+    searchOptionsList.setAttribute("class", "searchOptionsList");
+    header.appendChild(selectAnOption);
+    selectAnOption.appendChild(searchOptionsList);
+
+    // Go through the list of matches that the app.searchDataSet() function found and pushed into the app.searchMatches array, and create a li node for each one
+    app.searchMatches.forEach(function(searchTerm) {
+        console.log(searchTerm);
+        const searchOption = document.createElement("li");
+        searchOption.setAttribute("value", searchTerm);
+        searchOption.innerText = searchTerm;
+        searchOptionsList.appendChild(searchOption);
+    });
+
+    // Listen for the user to click the exit button
+    app.exitSearchOptions();
+
+    // Listen for the user to click on a search option
+    app.searchBasedOnSuggestions(data);
+}
+
+app.exitSearchOptions = function() {
+    const header = document.querySelector("header");
+    header.addEventListener("click", function(event) {
+        if (event.target.id === "exitOptionsButton") {
+            console.log("you clicked the button wowowowow");
+            const selectAnOption = document.getElementById("selectAnOption");
+            selectAnOption.parentNode.removeChild(selectAnOption);
+        }
+    });
+};
+
+app.searchBasedOnSuggestions = function(data) {
+    const header = document.querySelector("header");
+    header.addEventListener("click", function(event) {
+        if (event.target.localName == "li") {
+            console.log(`You clicked ${event.target.textContent}!`);
+            app.getData(data, event.target.textContent);
+            const selectAnOption = document.getElementById("selectAnOption");
+            selectAnOption.parentNode.removeChild(selectAnOption);
+        }
+    });
+}
+
+app.getData = function(data, prop) {
+    data.forEach(function(item) {
+        if (item.Characteristic === app.dataQueries.population) {
+            app.displayPopulationData(prop, item[prop]);
+            const totalPopulation = item[prop];
+            data.forEach(function(item) {
+                if (item.Characteristic === app.dataQueries.children) {
+                    app.displayChildrenData(prop, item[prop], totalPopulation);
+                }
+                if (item.Characteristic === app.dataQueries.youth) {
+                    app.displayYouthData(prop, item[prop], totalPopulation);
+                }
+                if (item.Characteristic === app.dataQueries.workingAge) {
+                    app.displayWorkingAgeData(prop, item[prop], totalPopulation);
+                }
+                if (item.Characteristic === app.dataQueries.preRetirement) {
+                    app.displayPreRetirementData(prop, item[prop], totalPopulation);
+                }
+                if (item.Characteristic === app.dataQueries.seniors) {
+                    app.displaySeniorsData(prop, item[prop], totalPopulation);
+                }
+            })
+        }
+        // Average Income Data
+        if (item.Characteristic === app.dataQueries.totalIncome) {
+            app.displayIncomeData(prop, item[prop]);
+        }
+        // Rate of Unaffordable Housing Data (Rental)
+        if (item.Characteristic === app.dataQueries.unaffordableHousing) {
+            app.displayUnaffordableHousingData(prop, item[prop]);
+        }
+        // Data Relating to Dwellings
+        if (item.Characteristic === app.dataQueries.privateDwellings) {
+            const numberOfPrivateDwellings = item[prop];
+            data.forEach(function(item) {
+                // Number of Highrise Buildings
+                if (item.Characteristic.trim() === app.dataQueries.highriseBuilding) {
+                    app.displayHighriseData(prop, item[prop], numberOfPrivateDwellings);
+                }
+                // Number of Condos
+                if (item.Characteristic.trim() === app.dataQueries.condo) {
+                    app.displayCondoData(prop, item[prop], numberOfPrivateDwellings);
+                }
+            })
+        }
+    })
 }
 
 app.dropDownMenu = function() {
@@ -132,7 +219,7 @@ app.listenForSelectChange = function() {
         const selectedOption = event.target.value;
         console.log(selectedOption);
         app.searchDataSet(selectedOption);
-    })
+    });
 }
 
 app.cleanData = function(data) {

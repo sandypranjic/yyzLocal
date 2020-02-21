@@ -398,74 +398,15 @@ header .neighbourhoodOptions {
   margin-top: 10px;
 }
 
-main .searchForANeighbourhood {
-  width: 100%;
-  text-align: center;
+header .selectAnOption {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  background-color: #ffffff;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
-main .searchForANeighbourhood input, main .searchForANeighbourhood button {
-  font-family: bebas-neue, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  width: 100%;
-  border-radius: 10px;
-  font-size: 1.7rem;
-}
-
-main .searchForANeighbourhood input {
-  border: 5px solid #f2b151;
-  margin: 10px 0;
-}
-
-main .searchForANeighbourhood input::-webkit-input-placeholder {
-  text-align: center;
+main {
   color: #262626;
-  opacity: 1;
-}
-
-main .searchForANeighbourhood input:-ms-input-placeholder {
-  text-align: center;
-  color: #262626;
-  opacity: 1;
-}
-
-main .searchForANeighbourhood input::-ms-input-placeholder {
-  text-align: center;
-  color: #262626;
-  opacity: 1;
-}
-
-main .searchForANeighbourhood input::placeholder {
-  text-align: center;
-  color: #262626;
-  opacity: 1;
-}
-
-main .searchForANeighbourhood button {
-  border: 5px solid #262626;
-  color: #e2670c;
-  background-color: #262626;
-  margin-bottom: 10px;
-}
-
-main .breakLine {
-  width: 100%;
-  margin: 20px 0;
-}
-
-main .breakLine img {
-  width: 100%;
-}
-
-main .neighbourhoodOptions {
-  font-family: bebas-neue, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-align: center;
-  font-size: 1.7rem;
-  border-radius: 10px;
-  border: 5px solid #f2b151;
-  width: 100%;
-  background-color: #f2b151;
-  margin-top: 10px;
 }

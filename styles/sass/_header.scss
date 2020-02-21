@@ -75,4 +75,13 @@ header {
         background-color: $main;
         margin-top: 10px;
     }
+    .selectAnOption {
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        // margin: 20px;
+        background-color: $white;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
 }
