@@ -1,8 +1,8 @@
 // Colours 
 
-$neutral: #eee9e3;
-$main: #f2b151;
-$accent: #e2670c;
+$neutral: #efe8e1;
+$main: #5264ef;
+$accent: #ed9654;
 
 $black: #262626;
 $white: #ffffff;
@@ -24,5 +24,11 @@ $white: #ffffff;
 @mixin caps {
     font-family: bebas-neue, sans-serif;
     font-weight: 400;
+    font-style: normal;
+}
+
+@mixin main {
+    font-family: poynter-oldstyle-text, serif;
+    font-weight: 700;
     font-style: normal;
 }

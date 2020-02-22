@@ -3,7 +3,12 @@ header {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: calc(100vh - 50px);
+    height: 100vh;
+    background-color: $main;
+    background-image: url("../assets/headerBackground.svg");
+    background-size: cover auto;
+    background-position: bottom;
+    background-repeat: no-repeat;
     .navContainer {
         display: flex;
         flex-direction: row;
@@ -28,8 +33,28 @@ header {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        flex-wrap: wrap;
+        margin-top: -100px;
         img {
+            width: 80%;
+            // object-fit: cover;
+            // flex: auto;
+            margin: 0 auto;
+        }
+        .start {
             width: 100%;
+            margin-top: 20px;
+            h2 {
+                @include main;
+                font-size: 2rem;
+                color: $neutral;
+                text-align: center;
+                transition: all 0.3s ease;
+                &:hover {
+                    color: $accent;
+                    cursor: pointer;
+                }
+            }
         }
     }
     .searchForANeighbourhood {

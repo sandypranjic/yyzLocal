@@ -249,7 +249,7 @@ li {
 }
 
 body {
-  background-color: #eee9e3;
+  background-color: #efe8e1;
   font-size: 62.5%;
   color: #262626;
 }
@@ -273,7 +273,12 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: calc(100vh - 50px);
+  height: 100vh;
+  background-color: #5264ef;
+  background-image: url("../assets/headerBackground.svg");
+  background-size: cover auto;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 
 header .navContainer {
@@ -319,10 +324,35 @@ header .logoContainer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-top: -100px;
 }
 
 header .logoContainer img {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header .logoContainer .start {
   width: 100%;
+  margin-top: 20px;
+}
+
+header .logoContainer .start h2 {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 2rem;
+  color: #efe8e1;
+  text-align: center;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+header .logoContainer .start h2:hover {
+  color: #ed9654;
+  cursor: pointer;
 }
 
 header .searchForANeighbourhood {
@@ -341,7 +371,7 @@ header .searchForANeighbourhood input, header .searchForANeighbourhood button {
 }
 
 header .searchForANeighbourhood input {
-  border: 5px solid #f2b151;
+  border: 5px solid #5264ef;
   margin: 10px 0;
 }
 
@@ -371,7 +401,7 @@ header .searchForANeighbourhood input::placeholder {
 
 header .searchForANeighbourhood button {
   border: 5px solid #262626;
-  color: #e2670c;
+  color: #ed9654;
   background-color: #262626;
   margin-bottom: 10px;
 }
@@ -392,9 +422,9 @@ header .neighbourhoodOptions {
   text-align: center;
   font-size: 1.7rem;
   border-radius: 10px;
-  border: 5px solid #f2b151;
+  border: 5px solid #5264ef;
   width: 100%;
-  background-color: #f2b151;
+  background-color: #5264ef;
   margin-top: 10px;
 }
 
@@ -407,6 +437,84 @@ header .selectAnOption {
   left: 20px;
 }
 
-main {
+main .searchForANeighbourhood {
+  width: 100%;
+  text-align: center;
+}
+
+main .searchForANeighbourhood input, main .searchForANeighbourhood button {
+  font-family: bebas-neue, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+main .searchForANeighbourhood input {
+  border: 5px solid #5264ef;
+  margin: 10px 0;
+}
+
+main .searchForANeighbourhood input::-webkit-input-placeholder {
+  text-align: center;
   color: #262626;
+  opacity: 1;
+}
+
+main .searchForANeighbourhood input:-ms-input-placeholder {
+  text-align: center;
+  color: #262626;
+  opacity: 1;
+}
+
+main .searchForANeighbourhood input::-ms-input-placeholder {
+  text-align: center;
+  color: #262626;
+  opacity: 1;
+}
+
+main .searchForANeighbourhood input::placeholder {
+  text-align: center;
+  color: #262626;
+  opacity: 1;
+}
+
+main .searchForANeighbourhood button {
+  border: 5px solid #262626;
+  color: #ed9654;
+  background-color: #262626;
+  margin-bottom: 10px;
+}
+
+main .breakLine {
+  width: 100%;
+  margin: 20px 0;
+}
+
+main .breakLine img {
+  width: 100%;
+}
+
+main .neighbourhoodOptions {
+  font-family: bebas-neue, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  font-size: 1.7rem;
+  border-radius: 10px;
+  border: 5px solid #5264ef;
+  width: 100%;
+  background-color: #5264ef;
+  margin-top: 10px;
+}
+
+main .selectAnOption {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  background-color: #ffffff;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }

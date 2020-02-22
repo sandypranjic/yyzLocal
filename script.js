@@ -76,7 +76,7 @@ app.multipleSearchOptions = function(data) {
     console.log(`Did you mean...`);
 
     // Create a div that pops-up
-    const header = document.querySelector("header");
+    const main = document.querySelector("main");
     const selectAnOption = document.createElement("div");
     selectAnOption.setAttribute("class", "selectAnOption");
     selectAnOption.setAttribute("id", "selectAnOption");
@@ -94,7 +94,7 @@ app.multipleSearchOptions = function(data) {
     // Create a list to hold the search options
     const searchOptionsList = document.createElement("ul");
     searchOptionsList.setAttribute("class", "searchOptionsList");
-    header.appendChild(selectAnOption);
+    main.appendChild(selectAnOption);
     selectAnOption.appendChild(searchOptionsList);
 
     // Go through the list of matches that the app.searchDataSet() function found and pushed into the app.searchMatches array, and create a li node for each one
@@ -114,8 +114,8 @@ app.multipleSearchOptions = function(data) {
 }
 
 app.exitSearchOptions = function() {
-    const header = document.querySelector("header");
-    header.addEventListener("click", function(event) {
+    const main = document.querySelector("main");
+    main.addEventListener("click", function(event) {
         if (event.target.id === "exitOptionsButton") {
             console.log("you clicked the button wowowowow");
             const selectAnOption = document.getElementById("selectAnOption");
@@ -125,8 +125,8 @@ app.exitSearchOptions = function() {
 };
 
 app.searchBasedOnSuggestions = function(data) {
-    const header = document.querySelector("header");
-    header.addEventListener("click", function(event) {
+    const main = document.querySelector("main");
+    main.addEventListener("click", function(event) {
         if (event.target.localName == "li") {
             console.log(`You clicked ${event.target.textContent}!`);
             app.getData(data, event.target.textContent);
@@ -217,8 +217,10 @@ app.listenForSelectChange = function() {
     const selectMenu = document.getElementById("neighbourhoodOptions");
     selectMenu.addEventListener("change", function(event) {
         const selectedOption = event.target.value;
-        console.log(selectedOption);
-        app.searchDataSet(selectedOption);
+        if (selectedOption !== "Choose a Neighbourhood") {
+            console.log(selectedOption);
+            app.searchDataSet(selectedOption);
+        }
     });
 }
 
