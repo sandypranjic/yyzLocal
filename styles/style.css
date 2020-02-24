@@ -235,7 +235,7 @@ html {
   overflow: hidden;
 }
 
-body, main, section, footer, div, p, h1, h2, h3 {
+body, main, section, footer, div, p, h1, h2, h3, h4 {
   margin: 0;
   padding: 0;
 }
@@ -251,7 +251,8 @@ li {
 body {
   background-color: #efe8e1;
   font-size: 62.5%;
-  color: #262626;
+  color: #282828;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -274,6 +275,7 @@ header {
       -ms-flex-align: center;
           align-items: center;
   height: 100vh;
+  width: 100%;
   background-color: #5264ef;
   background-image: url("../assets/headerBackground.svg");
   background-size: cover auto;
@@ -281,7 +283,7 @@ header {
   background-repeat: no-repeat;
 }
 
-header .navContainer {
+header .headerContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -289,26 +291,44 @@ header .navContainer {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  width: 100%;
-  height: 40px;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 90vw;
+  height: 40px;
   position: fixed;
-  right: 10px;
   top: 10px;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
 }
 
-header .navContainer img {
+header .headerContainer .smallLogo {
+  width: 50%;
+  height: 100%;
+}
+
+header .headerContainer .smallLogo img {
+  height: 20px;
+  width: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+header .headerContainer .navContainer {
+  width: 50%;
+  text-align: right;
+}
+
+header .headerContainer .navContainer img {
   width: 36px;
   height: 31px;
-  display: block;
+  display: inline-block;
 }
 
-header .navContainer img:hover {
+header .headerContainer .navContainer img:hover {
   cursor: pointer;
 }
 
@@ -348,11 +368,45 @@ header .logoContainer .start h2 {
   text-align: center;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 header .logoContainer .start h2:hover {
   color: #ed9654;
   cursor: pointer;
+}
+
+header .logoContainer .start h2::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  left: 0px;
+  height: 3px;
+  width: 0px;
+  background-color: #efe8e1;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+header .logoContainer .start .clicked {
+  color: #ed9654;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+header .logoContainer .start .clicked::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  left: 0px;
+  height: 3px;
+  width: 100%;
+  background-color: #efe8e1;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 header .searchForANeighbourhood {
@@ -377,32 +431,32 @@ header .searchForANeighbourhood input {
 
 header .searchForANeighbourhood input::-webkit-input-placeholder {
   text-align: center;
-  color: #262626;
+  color: #282828;
   opacity: 1;
 }
 
 header .searchForANeighbourhood input:-ms-input-placeholder {
   text-align: center;
-  color: #262626;
+  color: #282828;
   opacity: 1;
 }
 
 header .searchForANeighbourhood input::-ms-input-placeholder {
   text-align: center;
-  color: #262626;
+  color: #282828;
   opacity: 1;
 }
 
 header .searchForANeighbourhood input::placeholder {
   text-align: center;
-  color: #262626;
+  color: #282828;
   opacity: 1;
 }
 
 header .searchForANeighbourhood button {
-  border: 5px solid #262626;
+  border: 5px solid #282828;
   color: #ed9654;
-  background-color: #262626;
+  background-color: #282828;
   margin-bottom: 10px;
 }
 
@@ -437,55 +491,107 @@ header .selectAnOption {
   left: 20px;
 }
 
+main {
+  display: none;
+  /* for IE10 */
+}
+
+main p {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1rem;
+  color: #282828;
+  padding: 10px 0;
+}
+
+main .search {
+  height: 100vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 main .searchForANeighbourhood {
   width: 100%;
-  text-align: center;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
 }
 
 main .searchForANeighbourhood input, main .searchForANeighbourhood button {
-  font-family: bebas-neue, sans-serif;
-  font-weight: 400;
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
   font-style: normal;
-  width: 100%;
-  border-radius: 10px;
-  font-size: 1.7rem;
-  text-align: center;
+  font-size: 1rem;
+  text-align: left;
 }
 
 main .searchForANeighbourhood input {
-  border: 5px solid #5264ef;
+  border: 0;
+  border-bottom: 5px solid #5264ef;
   margin: 10px 0;
+  background-color: transparent;
+  width: 80%;
 }
 
 main .searchForANeighbourhood input::-webkit-input-placeholder {
-  text-align: center;
-  color: #262626;
+  text-align: left;
+  color: #282828;
   opacity: 1;
 }
 
 main .searchForANeighbourhood input:-ms-input-placeholder {
-  text-align: center;
-  color: #262626;
+  text-align: left;
+  color: #282828;
   opacity: 1;
 }
 
 main .searchForANeighbourhood input::-ms-input-placeholder {
-  text-align: center;
-  color: #262626;
+  text-align: left;
+  color: #282828;
   opacity: 1;
 }
 
 main .searchForANeighbourhood input::placeholder {
-  text-align: center;
-  color: #262626;
+  text-align: left;
+  color: #282828;
   opacity: 1;
 }
 
 main .searchForANeighbourhood button {
-  border: 5px solid #262626;
+  border: 0;
+  border-bottom: 5px solid #5264ef;
   color: #ed9654;
-  background-color: #262626;
+  font-size: 1.2rem;
+  background-color: transparent;
   margin-bottom: 10px;
+  width: 20%;
+  text-align: right;
 }
 
 main .breakLine {
@@ -498,16 +604,19 @@ main .breakLine img {
 }
 
 main .neighbourhoodOptions {
-  font-family: bebas-neue, sans-serif;
-  font-weight: 400;
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
   font-style: normal;
-  text-align: center;
-  font-size: 1.7rem;
-  border-radius: 10px;
+  color: #efe8e1;
+  text-align: left;
+  font-size: 1rem;
   border: 5px solid #5264ef;
   width: 100%;
   background-color: #5264ef;
   margin-top: 10px;
+  background-image: url("../assets/chevron-circle-down-solid.svg");
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 main .selectAnOption {
@@ -517,4 +626,195 @@ main .selectAnOption {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+main select {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+main select::-ms-expand {
+  display: none;
+}
+
+main .noResults {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .tryAgain {
+  position: relative;
+}
+
+main .tryAgain::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  left: 0px;
+  height: 3px;
+  width: 0px;
+  background-color: #ed9654;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .tryAgainClicked {
+  color: #ed9654;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline;
+}
+
+main .tryAgainClicked::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  left: 0px;
+  height: 3px;
+  width: 100%;
+  background-color: #ed9654;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .multipleSuggestions {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+main .multipleSuggestions .listOfSuggestions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+}
+
+main .multipleSuggestions .listOfSuggestions li {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1rem;
+  color: #282828;
+}
+
+main .results {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  height: calc(100vh - 60px);
+  width: 100%;
+  margin-top: 60px;
+  position: relative;
+}
+
+main .results .resultsContainer {
+  width: 100%;
+  padding: 10px 0;
+}
+
+main .results h3 {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #282828;
+  text-align: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+main .results h3::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 3px;
+  background-color: #ed9654;
+}
+
+main .results h4 {
+  font-size: 1.3rem;
+  text-align: left;
+}
+
+main .results span {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #5264ef;
+  font-size: 1.5rem;
+}
+
+main .results .searchAnotherContainer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+main .results .searchAnotherContainer .searchAnotherNeighbourhood {
+  font-family: poynter-oldstyle-text, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1rem;
+  white-space: nowrap;
+  opacity: 0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .results .searchAnotherContainer .showSearchAnother {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }

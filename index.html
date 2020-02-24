@@ -6,18 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>416Local - Toronto Neighbourhood Data</title>
     <link rel="stylesheet" href="https://use.typekit.net/ucw2dho.css">
+    <script src="https://kit.fontawesome.com/68beade91b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
     <header>
         <div class="wrapper">
-            <div class="navContainer">
-                <img src="./assets/nav.svg" alt="Click to open navigation">
-            </div>
+            <section class="headerContainer">
+                <div class="smallLogo">
+                    <img src="assets/smallLogo.svg" alt="Small logo for YYZLocal">
+                </div>
+                <div class="navContainer">
+                    <img src="./assets/nav.svg" alt="Click to open navigation">
+                </div>
+            </section>
             <div class="logoContainer">
                 <img src="./assets/logo.svg" alt="YYZLocal Logo">
                 <div class="start">
-                    <h2>Let's get started.</h2>
+                    <h2 id="startButton">Let's get started.</h2>
                 </div>
             </div>
         </div>
@@ -26,17 +32,66 @@
     
     <main>
         <div class="wrapper">
-            <form class="searchForANeighbourhood" id="searchForANeighbourhood">
-                <input type="text" name="searchTerm" id="searchTerm" placeholder="Neighbourhood name">
-                <button type="submit">Search for a Neighbourhood</button>
-            </form>
-            <div class="breakLine">
-                <img src="./assets/breakLine.svg" alt="">
-            </div>
-    
-            <select class="neighbourhoodOptions" id="neighbourhoodOptions">
-                <option value="Choose a Neighbourhood">Choose a Neighbourhood</option>
-            </select>
+            <section class="search">
+                <div class="instructions">
+                    <p>YYZ local is an app built using data provided by the City of Toronto from the last Canadian Census.</p>
+                    <p>Either search for a neighbourhood, or select an option from the drop-down to view crutial info on a specific area, like the rate of unaffordable housing and how many condos are around.</p>
+                </div>
+                <form class="searchForANeighbourhood" id="searchForANeighbourhood">
+                    <input type="text" name="searchTerm" id="searchTerm" placeholder="Enter neighbourhood name">
+                    <button type="submit"><i class="fas fa-chevron-circle-right"></i></button>
+                </form>
+        
+                <select class="neighbourhoodOptions" id="neighbourhoodOptions">
+                    <option value="Choose a Neighbourhood">Choose a Neighbourhood</option>
+                </select>
+            </section>
+
+            <section class="noResults" id="noResults">
+                <div class="instructions">
+                    <p>Uh oh. Looks like we can't find any neighbourhoods that match your search query.</p>
+                    <p class="tryAgain" id="tryAgain">Try again?</p>
+                </div>
+            </section>
+
+            <section class="multipleSuggestions" id="multipleSuggestions">
+                <div class="instructions">
+                    <p>We found multiple neighbourhoods that matched your search query.</p>
+                    <p>Did you mean...</p>
+                    <ul class="listOfSuggestions" id="listOfSuggestions">
+                    </ul>
+                    <p class="tryAgain" id="searchAgain">Search again?</p>
+                </div>
+            </section>
+
+            <section class="results" id="results">
+                <h3 class="neighbourhoodName" id="neighbourhoodName"></h3>
+                <div class="resultsContainer">
+                        <h4 class="resultsHeader">Total Population</h4>
+                        <span id="totalPopulation"></span>
+                    </div>
+                <div class="resultsContainer">
+                    <h4 class="resultsHeader">Average Income</h4>
+                    <span id="averageIncome"></span>
+                </div>
+                <div class="resultsContainer">
+                    <h4 class="resultsHeader">Rate of Unaffordable Housing</h4>
+                    <span id="unaffordableHousing"></span>
+                </div>
+                <div class="resultsContainer">
+                    <h4 class="resultsHeader">Percentage of Condos</h4>
+                    <span id="percentageOfCondos"></span>
+                </div>
+                <div class="resultsContainer">
+                    <h4 class="resultsHeader">Architecture Built Before 1960</h4>
+                    <span id="pre1960"></span>
+                </div>
+                <div class="searchAnotherContainer">
+                    <span id="searchAnotherNeighbourhood" class="searchAnotherNeighbourhood tryAgain">Search Another Neighbourhood</span>
+                </div>
+            </section>
+
+
         </div>
     </main>
     <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>

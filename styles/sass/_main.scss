@@ -1,28 +1,53 @@
 main {
+    display: none;
+    p {
+        @include main;
+        font-size: 1rem;
+        color: $black;
+        padding: 10px 0;
+    }
+    .search {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .searchForANeighbourhood {
         width: 100%;
-        text-align: center;
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: nowrap;
         input, button {
-            @include caps;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 1.7rem;
-            text-align: center;
+            @include main;
+            font-size: 1rem;
+            text-align: left;
         }
         input {
-            border: 5px solid $main;
+            border: 0;
+            border-bottom: 5px solid $main;
             margin: 10px 0;
+            background-color: transparent;
+            width: 80%;
             &::placeholder {
-                text-align: center;
+                text-align: left;
                 color: $black;
                 opacity: 1;
             }
         }
         button {
-            border: 5px solid $black;
+            border: 0;
+            border-bottom: 5px solid $main;
             color: $accent;
-            background-color: $black;
+            font-size: 1.2rem;
+            background-color: transparent;
             margin-bottom: 10px;
+            width: 20%;
+            text-align: right;
         }
     }
     .breakLine {
@@ -33,14 +58,17 @@ main {
         }
     }
     .neighbourhoodOptions {
-        @include caps;
-        text-align: center;
-        font-size: 1.7rem;
-        border-radius: 10px;
+        @include main;
+        color: $neutral;
+        text-align: left;
+        font-size: 1rem;
         border: 5px solid $main;
         width: 100%;
         background-color: $main;
         margin-top: 10px;
+        background-image: url("../assets/chevron-circle-down-solid.svg");
+        background-position: right;
+        background-repeat: no-repeat;
     }
     .selectAnOption {
         width: calc(100% - 40px);
@@ -50,5 +78,133 @@ main {
         position: absolute;
         top: 20px;
         left: 20px;
+    }
+    select {
+        /* for Firefox */
+        -moz-appearance: none;
+        /* for Chrome */
+        -webkit-appearance: none;
+    }
+      /* for IE10 */
+    select::-ms-expand {
+        display: none;
+    }
+    .noResults {
+        display: none;
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: all 1s ease;
+    }
+    .tryAgain {
+        position: relative;
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: -5px;
+            left: 0px;
+            height: 3px;
+            width: 0px;
+            background-color: $accent;
+            transition: all 1s ease;
+        }
+    }
+    .tryAgainClicked {
+        color: $accent;
+        position: relative;
+        transition: all 0.3s ease;
+        display: inline;
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: -5px;
+            left: 0px;
+            height: 3px;
+            width: 100%;
+            background-color: $accent;
+            transition: all 1s ease;
+        }
+    }
+    .multipleSuggestions {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        .listOfSuggestions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            li {
+                @include main;
+                font-size: 1rem;
+                color: $black;
+            }
+        }
+    }
+    .results {
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: calc(100vh - 60px);
+        width: 100%;
+        margin-top: 60px;
+        position: relative;
+        .resultsContainer {
+            width: 100%;
+            padding: 10px 0;
+        }
+        h3 {
+            @include main;
+            font-size: 1.5rem;
+            color: $black;
+            text-align: center;
+            position: relative;
+            margin-bottom: 10px;
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -5px;
+                width: 100%;
+                height: 3px;
+                background-color: $accent;
+            }
+        }
+        h4 {
+            font-size: 1.3rem;
+            text-align: left;
+        }
+        span {
+            @include main;
+            color: $main;
+            font-size: 1.5rem;
+        }
+        .searchAnotherContainer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            .searchAnotherNeighbourhood {
+                @include main;
+                font-size: 1rem;
+                white-space: nowrap;
+                opacity: 0;
+                transition: all 0.5s ease;
+            }
+            .showSearchAnother {
+                opacity: 1;
+                transition: all 0.5s ease;
+            }
+        }
     }
 }

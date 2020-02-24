@@ -4,27 +4,41 @@ header {
     justify-content: space-evenly;
     align-items: center;
     height: 100vh;
+    width: 100%;
     background-color: $main;
     background-image: url("../assets/headerBackground.svg");
     background-size: cover auto;
     background-position: bottom;
     background-repeat: no-repeat;
-    .navContainer {
+    .headerContainer {
         display: flex;
         flex-direction: row;
-        width: 100%;
-        height: 40px;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
+        width: 90vw;
+        height: 40px;
         position: fixed;
-        right: 10px;
         top: 10px;
-        img {
-            width: 36px;
-            height: 31px;
-            display: block;
-            &:hover {
-                cursor: pointer;
+        flex-wrap: nowrap;
+        .smallLogo {
+            width: 50%;
+            height: 100%;
+            img {
+                height: 20px;
+                width: auto;
+                object-fit: contain;
+            }
+        }
+        .navContainer {
+            width: 50%;
+            text-align: right;
+            img {
+                width: 36px;
+                height: 31px;
+                display: inline-block;
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -50,9 +64,37 @@ header {
                 color: $neutral;
                 text-align: center;
                 transition: all 0.3s ease;
+                position: relative;
                 &:hover {
                     color: $accent;
                     cursor: pointer;
+                }
+                &::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0px;
+                    height: 3px;
+                    width: 0px;
+                    background-color: $neutral;
+                    transition: all 1s ease;
+                }
+            }
+            .clicked {
+                color: $accent;
+                position: relative;
+                transition: all 0.3s ease;
+                &::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0px;
+                    height: 3px;
+                    width: 100%;
+                    background-color: $neutral;
+                    transition: all 1s ease;
                 }
             }
         }

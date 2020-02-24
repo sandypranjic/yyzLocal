@@ -1,5 +1,38 @@
 const app = {};
 
+app.listenForStart = function() {
+    document.getElementById("startButton").addEventListener("click", function() {
+        startButton.classList.add("clicked");
+        app.scrollToMain();
+    });
+}
+
+app.scrollTo = function(element) {
+    const body = document.querySelector("body");
+    body.style.overflow = "auto";
+    window.scroll({
+        behavior: 'smooth',
+        left: 0,
+        top: element.offsetTop,
+    });
+    setTimeout(function() {
+        body.style.overflow = "hidden";
+    }, 1700);
+}
+
+app.scrollToMain = function() {
+    const main = document.querySelector("main");
+    setTimeout(function() {
+        main.style.display = "block";
+        console.log(main);
+        app.scrollTo(main);
+    }, 1500);
+    setTimeout(function() {
+        const startButton = document.getElementById("startButton");
+        startButton.classList.remove("clicked");
+    }, 2000);
+}
+
 app.listenForFormSubmit = function() {
     document.getElementById("searchForANeighbourhood").addEventListener("submit", function(event) {
         event.preventDefault();
@@ -19,6 +52,7 @@ app.dataQueries = {
     highriseBuilding: "Apartment in a building that has five or more storeys",
     privateDwellings: "Occupied private dwellings",
     condo: "Condominium",
+    pre1960: "1960 or before",
     // Age Characteristics:
     children: "Children (0-14 years)",
     youth: "Youth (15-24 years)",
@@ -63,6 +97,7 @@ app.searchDataSet = function(searchQuery) {
 app.checkHowManyMatches = function(data) {
     if (app.searchMatches.length === 0) {
         console.log(`Sorry, we couldn't find a match for your search.`);
+        app.noResults();
     } else if (app.searchMatches.length === 1) {
         console.log(`There is one match`);
         app.getData(data, app.searchMatches[0]);
@@ -72,31 +107,43 @@ app.checkHowManyMatches = function(data) {
     }
 }
 
+app.noResults = function() {
+    const noResultsText = document.getElementById("noResults");
+    noResultsText.style.display = "flex";
+    app.scrollTo(noResultsText);
+    app.listenForTryAgain();
+}
+
+app.listenForTryAgain = function() {
+    const main = document.querySelector("main");
+    main.addEventListener("click", function(event) {
+        const clickedElement = event.target;
+        if (clickedElement.classList.contains("tryAgain") === true) {
+            clickedElement.classList.add("tryAgainClicked");
+            const noResults = document.getElementById("noResults");
+            const multipleSuggestions = document.getElementById("multipleSuggestions");
+            setTimeout(function() {
+                app.scrollTo(main);
+            }, 1500);
+            setTimeout(function() {
+                noResults.style.display = "none";
+                multipleSuggestions.style.display = "none";
+                clickedElement.classList.remove("tryAgainClicked");
+            }, 2000);
+            setTimeout(function() {
+                if (clickedElement.classList.contains("searchAnotherNeighbourhood") === true) {
+                    clickedElement.classList.remove("showSearchAnother");
+                }
+            }, 2000);
+        }
+    });
+}
+
 app.multipleSearchOptions = function(data) {
     console.log(`Did you mean...`);
 
-    // Create a div that pops-up
-    const main = document.querySelector("main");
-    const selectAnOption = document.createElement("div");
-    selectAnOption.setAttribute("class", "selectAnOption");
-    selectAnOption.setAttribute("id", "selectAnOption");
-
-    // Create a button to exit the pop-up
-    const exitOptionsContainer = document.createElement("div");
-    exitOptionsContainer.setAttribute("class", "exitOptionsContainer");
-    const exitOptionsButton = document.createElement("button");
-    exitOptionsButton.setAttribute("class", "exitOptionsButton");
-    exitOptionsButton.setAttribute("id", "exitOptionsButton");
-    selectAnOption.appendChild(exitOptionsContainer);
-    exitOptionsContainer.appendChild(exitOptionsButton);
-    exitOptionsButton.innerText = "X";
-
-    // Create a list to hold the search options
-    const searchOptionsList = document.createElement("ul");
-    searchOptionsList.setAttribute("class", "searchOptionsList");
-    main.appendChild(selectAnOption);
-    selectAnOption.appendChild(searchOptionsList);
-
+    const multipleSuggestions = document.getElementById("multipleSuggestions");
+    const searchOptionsList = document.getElementById("listOfSuggestions");
     // Go through the list of matches that the app.searchDataSet() function found and pushed into the app.searchMatches array, and create a li node for each one
     app.searchMatches.forEach(function(searchTerm) {
         console.log(searchTerm);
@@ -105,24 +152,25 @@ app.multipleSearchOptions = function(data) {
         searchOption.innerText = searchTerm;
         searchOptionsList.appendChild(searchOption);
     });
-
     // Listen for the user to click the exit button
-    app.exitSearchOptions();
 
     // Listen for the user to click on a search option
+    multipleSuggestions.style.display = "flex";
     app.searchBasedOnSuggestions(data);
+    app.scrollTo(multipleSuggestions);
+    app.listenForTryAgain();
 }
 
-app.exitSearchOptions = function() {
-    const main = document.querySelector("main");
-    main.addEventListener("click", function(event) {
-        if (event.target.id === "exitOptionsButton") {
-            console.log("you clicked the button wowowowow");
-            const selectAnOption = document.getElementById("selectAnOption");
-            selectAnOption.parentNode.removeChild(selectAnOption);
-        }
-    });
-};
+// app.exitSearchOptions = function() {
+//     const main = document.querySelector("main");
+//     main.addEventListener("click", function(event) {
+//         if (event.target.id === "exitOptionsButton") {
+//             console.log("you clicked the button wowowowow");
+//             const selectAnOption = document.getElementById("selectAnOption");
+//             selectAnOption.parentNode.removeChild(selectAnOption);
+//         }
+//     });
+// };
 
 app.searchBasedOnSuggestions = function(data) {
     const main = document.querySelector("main");
@@ -130,13 +178,13 @@ app.searchBasedOnSuggestions = function(data) {
         if (event.target.localName == "li") {
             console.log(`You clicked ${event.target.textContent}!`);
             app.getData(data, event.target.textContent);
-            const selectAnOption = document.getElementById("selectAnOption");
-            selectAnOption.parentNode.removeChild(selectAnOption);
         }
     });
 }
 
 app.getData = function(data, prop) {
+    const neighbourhoodName = document.getElementById("neighbourhoodName");
+    neighbourhoodName.innerText = prop;
     data.forEach(function(item) {
         if (item.Characteristic === app.dataQueries.population) {
             app.displayPopulationData(prop, item[prop]);
@@ -179,9 +227,22 @@ app.getData = function(data, prop) {
                 if (item.Characteristic.trim() === app.dataQueries.condo) {
                     app.displayCondoData(prop, item[prop], numberOfPrivateDwellings);
                 }
+                if (item.Characteristic.trim() === app.dataQueries.pre1960) {
+                    app.displayPre1960Data(prop, item[prop], numberOfPrivateDwellings);
+                }
             })
         }
     })
+    setTimeout(function(){
+        const results = document.getElementById("results");
+        results.style.display = "flex";
+        app.scrollTo(results);
+    }, 1000);
+    setTimeout(function() {
+        const searchAnotherNeighbourhood = document.getElementById("searchAnotherNeighbourhood");
+        searchAnotherNeighbourhood.classList.add("showSearchAnother");
+    }, 2000);
+    app.listenForTryAgain();
 }
 
 app.dropDownMenu = function() {
@@ -245,14 +306,20 @@ app.calculatePercentage = function(x, y) {
 
 app.displayPopulationData = function(searchQuery, data) {
     console.log(`The population of ${searchQuery} is ${data}`);
+    const totalPopulation = document.getElementById("totalPopulation");
+    totalPopulation.innerText = data;
 }
 
 app.displayIncomeData = function(searchQuery, data) {
     console.log(`The average income of ${searchQuery} is $${data}`);
+    const averageIncome = document.getElementById("averageIncome");
+    averageIncome.innerText = `$${data}`;
 }
 
 app.displayUnaffordableHousingData = function(searchQuery, data) {
     console.log(`The rate of unaffordable rental housing in ${searchQuery} is ${data}%.`);
+    const unaffordableHousing = document.getElementById("unaffordableHousing");
+    unaffordableHousing.innerText = `${data}%`;
 }
 
 app.displayHighriseData = function(searchQuery, totalHighrises, totalPrivateDwellings) {
@@ -260,9 +327,18 @@ app.displayHighriseData = function(searchQuery, totalHighrises, totalPrivateDwel
     console.log(`The total percentage of dwellings that are highrises in ${searchQuery} is ${percentageOfHighrises}%`);
 }
 
+app.displayPre1960Data = function(searchQuery, totalPre1960, totalPrivateDwellings) {
+    const percentageOfPre1960 = app.calculatePercentage(totalPre1960, totalPrivateDwellings);
+    console.log(`The percentage of architecture built before 1960 in ${searchQuery} is ${percentageOfPre1960}%.`);
+    const pre1960 = document.getElementById("pre1960");
+    pre1960.innerText = `${percentageOfPre1960}%`;
+}
+
 app.displayCondoData = function(searchQuery, totalCondos, totalPrivateDwellings) {
     const percentageOfCondos = app.calculatePercentage(totalCondos, totalPrivateDwellings);
     console.log(`The total percentage of dwellings that are condos in ${searchQuery} is ${percentageOfCondos}%`);
+    const percentageOfCondosText = document.getElementById("percentageOfCondos");
+    percentageOfCondosText.innerText = `${percentageOfCondos}%`;
 }
 
 app.displayChildrenData = function(searchQuery, numOfChildren, totalPopulation) {
@@ -292,6 +368,7 @@ app.displaySeniorsData = function(searchQuery, numOfSeniors, totalPopulation) {
 
 app.init = function() {
     console.log("init!");
+    app.listenForStart();
     app.listenForFormSubmit();
     app.dropDownMenu();
     app.listenForSelectChange();
